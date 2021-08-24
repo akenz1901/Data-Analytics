@@ -1,0 +1,120 @@
+---
+title: "Class_Exercise"
+author: "Akenz"
+date: "8/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r loading dataset}
+library(tidyverse)
+gy <- read.csv("C:/Semicolon/R/Session2/Gym.csv", header = T, stringsAsFactors = TRUE)
+glimpse(gy)
+```
+```{r plotting}
+bm <- ggplot(gy, aes(x = Product, fill = Product)) + geom_bar()
+bm
+```
+```{r adding more}
+bm + labs(x = "Product", y = "Frequency", title = "Distribution of Products")+ geom_text(stat = 'count', aes(label = ..count..), vjust=-0.3)
+```
+```{r plotting}
+bm2 <- ggplot(gy, aes(x = Gender, fill = Gender)) + geom_bar()+ labs(x = "Gender", y = "Frequency", title = "Distribution of Gender")+ geom_text(stat = 'count', aes(label = ..count..), vjust=-0.3)
+bm2
+```
+
+```{r plotting}
+bm3 <- ggplot(gy, aes(x = MaritalStatus, fill = MaritalStatus)) + geom_bar()+ labs(x = "Marital Status", y = "Frequency", title = "Distribution of MaritalStatus")+ geom_text(stat = 'count', aes(label = ..count..), vjust=-0.3)
+bm3
+```
+
+
+```{r using gridExtra and Scale}
+library(gridExtra)
+library(scales)
+```
+
+```{r using gridExtra and Scale}
+p1<- ggplot(gy, aes(x = Income))+geom_histogram(color = "black", fil = "gray")+scale_x_continuous(labels = comma)+ labs(title = "Histogram of Income", x="Income", y="Freuency")+theme_bw()
+
+p2<- ggplot(gy, aes(x = Income))+geom_boxplot(color = "black", fill = "gray")+scale_x_continuous(labels = comma)+labs(title = "Boxplot of income", x="Income")+theme_bw()
+
+grid.arrange(p2, p1, heights = c(1, 1))
+```
+
+```{r using gridExtra and Scale}
+p3<- ggplot(gy, aes(x = Education))+geom_histogram(color = "black", fil = "gray")+scale_x_continuous(labels = comma)+ labs(title = "Histogram of Education", x="Education", y="Freuency")+theme_bw()
+
+p4<- ggplot(gy, aes(x = Education))+geom_boxplot(color = "black", fill = "gray")+scale_x_continuous(labels = comma)+labs(title = "Boxplot of Education", x="Education")+theme_bw()
+
+grid.arrange(p4, p3, heights = c(1, 1))
+```
+
+```{r using gridExtra and Scale}
+p5<- ggplot(gy, aes(x = Age))+geom_histogram(color = "black", fil = "gray")+scale_x_continuous(labels = comma)+ labs(title = "Histogram of Age", x="Age", y="Freuency")+theme_bw()
+
+p6<- ggplot(gy, aes(x = Age))+geom_boxplot(color = "black", fill = "gray")+scale_x_continuous(labels = comma)+labs(title = "Boxplot of Age", x="Age")+theme_bw()
+
+grid.arrange(p6, p5, heights = c(1, 1))
+```
+
+```{r using gridExtra and Scale}
+p5<- ggplot(gy, aes(x = Age))+geom_histogram(color = "black", fil = "gray")+scale_x_continuous(labels = comma)+ labs(title = "Histogram of Age", x="Age", y="Freuency")+theme_bw()
+
+p6<- ggplot(gy, aes(x = log(Age)))+geom_boxplot(color = "black", fill = "gray")+scale_x_continuous(labels = comma)+labs(title = "Boxplot of Age", x="Age")+theme_bw()
+
+grid.arrange(p5, p6, heights = c(1, 1))
+```
+
+```{r}
+b5<-ggplot(gy, aes(x = Product, fill=MaritalStatus))+geom_bar(position = "dodge")+ labs(x = "Product", y="Frequency", title = "Product Buyers by Marital Status")
+b5
+```
+
+```{r}
+b5_1<- b5+geom_text(stat='count', aes(label=..count..), position =position_dodge(width=0.9), vjust=-0.25)
+b5_1
+```
+
+```{r}
+b6<-ggplot(gy, aes(x = Product, fill=MaritalStatus))+geom_bar(position = "dodge")+ labs(x = "Product", y="Frequency", title = "Product Buyers by Marital Status") + facet_grid(~Gender)
+b6
+```
+
+```{r}
+b6_1<- b6+geom_text(stat='count', aes(label=..count..), position =position_dodge(width=0.9), vjust=-0.25)
+b6_1
+```
+```{r}
+dt_2 <- read.csv(file.choose(), header = T)
+```
+
+```{r}
+dt_2$Gender<-as.factor(dt_2$Gender)
+levels(dt_2$Gender)<-c("Male", "Female")
+glimpse(dt_2)
+```
